@@ -14,26 +14,11 @@ namespace dt102g_moment2.Controllers
         public ActionResult Index()
         {
             // Check if session is set and display number of items
-            if (HttpContext.Session.GetString("SelectedItems") != null)
-            {
-                string NumberOfProducts = HttpContext.Session.GetString("SelectedItems");
-                var ProductsObj = JsonConvert.DeserializeObject<ICollection<ProductModel>>(NumberOfProducts);
-                ViewData["CartItems"] = ProductsObj.Count;
-            }
-            else
-            {
-                ViewData["CartItems"] = 0;
-            }
+            ViewData["CartItems"] = GetNrItems();
 
             // Check if session is set and send list of objects to view
-            if (HttpContext.Session.GetString("SelectedItems") != null)
-            {
-                var ProductsObj = JsonConvert.DeserializeObject<List<ProductModel>>(HttpContext.Session.GetString("SelectedItems"));
-                
-                // Sort list to in case user adds same product more than once
-                var sortedList = ProductsObj.OrderBy(name => name.ProductName).ToList();
-                ViewData["Products"] = sortedList;
-            }
+            ViewData["Products"] = getListOfItems();
+
             return View();            
         }
 
@@ -41,6 +26,12 @@ namespace dt102g_moment2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(CheckoutModel model)
         {
+            // Check if session is set and display number of items
+            ViewData["CartItems"] = GetNrItems();
+
+            // Check if session is set and send list of objects to view
+            ViewData["Products"] = getListOfItems();
+
             // Check if fields validate
             if (ModelState.IsValid)
             {
@@ -91,5 +82,38 @@ namespace dt102g_moment2.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-    }
+
+        // Method to get number of items in cart
+        public int GetNrItems()
+        {
+            if (HttpContext.Session.GetString("SelectedItems") != null)
+            {
+                string NumberOfProducts = HttpContext.Session.GetString("SelectedItems");
+                var ProductsObj = JsonConvert.DeserializeObject<ICollection<ProductModel>>(NumberOfProducts);
+                return ProductsObj.Count;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        // Method to get items in cart
+        public List<ProductModel> getListOfItems()
+        {
+            if (HttpContext.Session.GetString("SelectedItems") != null)
+            {
+                var ProductsObj = JsonConvert.DeserializeObject<List<ProductModel>>(HttpContext.Session.GetString("SelectedItems"));
+
+                // Sort list to in case user adds same product more than once
+                var sortedList = ProductsObj.OrderBy(name => name.ProductName).ToList();
+                return sortedList;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
+}
 }
