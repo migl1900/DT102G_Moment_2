@@ -1,0 +1,13 @@
+﻿<div class="d-flex flex-column flex-md-row flex-wrap">
+    @foreach (var product in Model)
+    {
+        <div class="product-preview" onclick="location.href = '@Url.Action("Product", "Product", new { ProductId = product.ProductId })'">
+            <img src="images/@product.ProductImage" alt="@product.ProductDescription" />
+            <br /><br />
+            <h3>@product.ProductName</h3>
+            <p>@product.ProductDescription</p>
+            <p><strong>@product.ProductPrice kr</strong></p>
+        </div>
+
+    }
+</div>

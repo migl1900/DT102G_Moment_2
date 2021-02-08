@@ -1,0 +1,56 @@
+﻿@model dt102g_moment2.Models.CheckoutModel
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<h1>Tack för din beställning</h1>
+
+<div>
+    <h4>Varorna skickas till dig inom kort</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name): 
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Name
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ssn):
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Ssn
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address):
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Address
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Zip):
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Zip
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City):
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.City
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone):
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Phone
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email):
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Email
+        </dd>
+    </dl>
+</div>

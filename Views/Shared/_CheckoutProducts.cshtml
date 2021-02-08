@@ -1,0 +1,43 @@
+﻿<h4>Valda produkter</h4>
+
+@if (ViewData["Products"] != null)
+{
+    List<ProductModel> products = ViewData["Products"] as List<ProductModel>;
+    int numberOfItems = products.Count();
+    string pName = "";
+    int quantity = 0;
+    int price = 0;
+    int tot = 0;
+    @for (var i = 0; i < numberOfItems; i++)
+    {
+        @if (pName == "")
+        {
+            pName = products[i].ProductName;
+        }
+        @if (products[i].ProductName == pName)
+        {
+            quantity++;
+            price = price + products[i].ProductPrice;
+            tot = tot + products[i].ProductPrice;
+            continue;
+        }
+        else
+        {
+            <p><span class="pr-4 font-weight-bold">@pName</span><span class="pr-4">Antal: @quantity st</span><span>Pris: @price kr</span></p>
+            pName = products[i].ProductName;
+            price = products[i].ProductPrice;
+            quantity = 1;
+            tot = tot + products[i].ProductPrice;
+        }
+    }
+    <p><span class="pr-4 font-weight-bold">@pName</span><span class="pr-4">Antal: @quantity st</span><span>Pris: @price kr</span></p>
+    <p>Summa att betala: @tot kronor</p>
+    @using (Html.BeginForm("Reset", "Checkout"))
+    {
+        <input type="submit" name="Reset" value="Töm varukorgen" class="btn btn-danger" />
+    }
+}
+else
+{
+    <p>Inga varor tillagda i varukorgen!!</p>
+}

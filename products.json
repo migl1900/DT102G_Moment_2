@@ -1,0 +1,44 @@
+﻿[
+  {
+    "ProductId": 1,
+    "ProductImage": "product_cap1_small.jpg",
+    "ProductName": "Mössa",
+    "ProductDescription": "Värmande och skön mössa för kalla dagar i skogen.",
+    "ProductPrice": 199
+  },
+  {
+    "ProductId": 2,
+    "ProductImage": "product_binoculars1_small.jpg",
+    "ProductName": "Kikare",
+    "ProductDescription": "Robust, vattentät kikare med multilagda linser för bästa möjliga ljusgenomsläpp.",
+    "ProductPrice": 1999
+  },
+  {
+    "ProductId": 3,
+    "ProductImage": "product_ear_protection1_small.jpg",
+    "ProductName": "Hörselskydd",
+    "ProductDescription": "Hörselskydd för jakt och skytte med medhörningsfunktion.",
+    "ProductPrice": 749
+  },
+  {
+    "ProductId": 4,
+    "ProductImage": "product_glasses1_small.jpg",
+    "ProductName": "Skjutglasögon",
+    "ProductDescription": "Mjuka, böjbara skalmar och mjuk näsbrygga för bästa komfort.",
+    "ProductPrice": 159
+  },
+  {
+    "ProductId": 5,
+    "ProductImage": "product_gloves1_small.jpg",
+    "ProductName": "Handskar",
+    "ProductDescription": "Smart jakthandske av hög kvalitet!",
+    "ProductPrice": 295
+  },
+  {
+    "ProductId": 6,
+    "ProductImage": "product_knife1_small.jpg",
+    "ProductName": "Kniv",
+    "ProductDescription": "Designad för att klara de hårdaste utmaningar den kan tänkas möta.",
+    "ProductPrice": 999
+  }
+]
