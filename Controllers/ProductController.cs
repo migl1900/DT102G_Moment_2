@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace dt102g_moment2.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : SharedController
     {
         public IActionResult Index()
         {
@@ -22,6 +22,7 @@ namespace dt102g_moment2.Controllers
             // Send object to view
             return View(JsonObj);
         }
+
         [HttpGet("/Produkt")]
         [HttpPost("/Produkt")]
         public IActionResult Product([FromQuery] int ProductId, IFormCollection fc)
@@ -31,28 +32,30 @@ namespace dt102g_moment2.Controllers
             var JsonObj = ConvertJson(JsonStr);
 
             // Get specific product and save as object
-            ProductModel product = new ProductModel();
-            product.ProductImage = JsonObj.First(x => x.ProductId == ProductId).ProductImage;
-            product.ProductName = JsonObj.First(x => x.ProductId == ProductId).ProductName;
-            product.ProductDescription = JsonObj.First(x => x.ProductId == ProductId).ProductDescription;
-            product.ProductPrice = JsonObj.First(x => x.ProductId == ProductId).ProductPrice;
-            ViewBag.product = product;
-
-            // Set bought items from user
-            int Quantity = Convert.ToInt32(fc["quantity"]);
-
-            // Create new list from model
-            List<ProductModel> SelectedProducts = new List<ProductModel>();
-
-            // If session exist get parse items to list
-            if (HttpContext.Session.GetString("SelectedItems") != null)
+            ProductModel product = new ProductModel
             {
-                SelectedProducts = JsonConvert.DeserializeObject<List<ProductModel>>(HttpContext.Session.GetString("SelectedItems"));
-            }
+                ProductImage = JsonObj.First(x => x.ProductId == ProductId).ProductImage,
+                ProductName = JsonObj.First(x => x.ProductId == ProductId).ProductName,
+                ProductDescription = JsonObj.First(x => x.ProductId == ProductId).ProductDescription,
+                ProductPrice = JsonObj.First(x => x.ProductId == ProductId).ProductPrice
+            };
+            ViewBag.product = product;
 
             // Check that submit is pressed
             if (fc["submit"] == "Lägg i varukorgen")
             {
+                // Set bought items from user
+                int Quantity = Convert.ToInt32(fc["quantity"]);
+
+                // Create new list from model
+                List<ProductModel> SelectedProducts = new List<ProductModel>();
+
+                // If session exist get parse items to list
+                if (HttpContext.Session.GetString("SelectedItems") != null)
+                {
+                    SelectedProducts = JsonConvert.DeserializeObject<List<ProductModel>>(HttpContext.Session.GetString("SelectedItems"));
+                }
+
                 // Add item to list chosen number of times
                 for (int i = 0; i < Quantity; i++)
                 {
@@ -75,20 +78,6 @@ namespace dt102g_moment2.Controllers
         {
             var JsonObj = JsonConvert.DeserializeObject<IEnumerable<ProductModel>>(JsonStr);
             return JsonObj;
-        }
-
-        // Method to get number of items in cart
-        public int GetNrItems()
-        {
-            if(HttpContext.Session.GetString("SelectedItems") != null)
-            {
-                string NumberOfProducts = HttpContext.Session.GetString("SelectedItems");
-                var ProductsObj = JsonConvert.DeserializeObject<ICollection<ProductModel>>(NumberOfProducts);
-                return ProductsObj.Count;
-            } else
-            {
-                return 0;
-            }
         }
     }
 }

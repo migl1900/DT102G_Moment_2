@@ -11,6 +11,7 @@ namespace dt102g_moment2.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Ange ditt personnummer!")]
+        [MinLength(10, ErrorMessage = "Du måste ange minst 10 tecken")]
         [Display(Name = "Personnummer")]
         public string Ssn { get; set; }
 

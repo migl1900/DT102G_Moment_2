@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace dt102g_moment2.Controllers
 {
-    public class CheckoutController : Controller
+    public class CheckoutController : SharedController
     {
         // Change page routing
         [HttpGet("/Kassa")]
-        public ActionResult Index()
+        public ActionResult Checkout()
         {
             // Check if session is set and display number of items
             ViewData["CartItems"] = GetNrItems();
@@ -24,7 +24,7 @@ namespace dt102g_moment2.Controllers
 
         [HttpPost("/Kassa")]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(CheckoutModel model)
+        public ActionResult Checkout(CheckoutModel model)
         {
             // Check if session is set and display number of items
             ViewData["CartItems"] = GetNrItems();
@@ -53,7 +53,7 @@ namespace dt102g_moment2.Controllers
             }
             return View();
         }
-        [HttpGet("Utcheckning")]
+        [HttpGet("/Utcheckning")]
         public ActionResult Result()
         {
             // Get values from model and send to view
@@ -80,22 +80,7 @@ namespace dt102g_moment2.Controllers
             {
                 HttpContext.Session.Remove("SelectedItems");
             }
-            return RedirectToAction(nameof(Index));
-        }
-
-        // Method to get number of items in cart
-        public int GetNrItems()
-        {
-            if (HttpContext.Session.GetString("SelectedItems") != null)
-            {
-                string NumberOfProducts = HttpContext.Session.GetString("SelectedItems");
-                var ProductsObj = JsonConvert.DeserializeObject<ICollection<ProductModel>>(NumberOfProducts);
-                return ProductsObj.Count;
-            }
-            else
-            {
-                return 0;
-            }
+            return RedirectToAction(nameof(Checkout));
         }
 
         // Method to get items in cart
